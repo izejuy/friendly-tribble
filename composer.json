@@ -1,0 +1,25 @@
+{
+    "require": {
+        "cakephp/cache": "^3.7",
+        "cakephp/database": "^3.7",
+        "cakephp/form": "^3.7",
+        "cakephp/log": "^3.7",
+        "cakephp/validation": "^3.7",
+        "nesbot/carbon": "^2.10",
+        "paragonie/halite": "^4.5",
+        "paragonie/hidden-string": "^1.0",
+        "symfony/console": "^4.2",
+        "symfony/debug": "^4.2",
+        "symfony/lock": "^4.2",
+        "symfony/options-resolver": "^4.2",
+        "symfony/polyfill-apcu": "^1.10",
+        "symfony/polyfill-ctype": "^1.10",
+        "symfony/polyfill-mbstring": "^1.10",
+        "symfony/polyfill-php73": "^1.10",
+        "symfony/process": "^4.2"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

@@ -13,7 +13,7 @@ use Symfony\Component\Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-(new Dotenv())->load(__DIR__ . '/gem.env');
+(new Dotenv())->load(__DIR__ . '/../gem.env');
 
 if ($_ENV['DEBUG']) {
     Debug::enable();

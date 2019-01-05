@@ -9,8 +9,11 @@ declare(strict_types=1);
  */
 
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+(new Dotenv())->load(__DIR__ . '/gem.env');
 
 if ($_ENV['DEBUG']) {
     Debug::enable();

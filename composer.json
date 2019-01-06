@@ -4,6 +4,7 @@
     "keywords": [],
     "type": "project",
     "require": {
+        "php": ">=7.2",
         "cakephp/cache": "^3.7",
         "cakephp/database": "^3.7",
         "cakephp/form": "^3.7",
@@ -33,9 +34,15 @@
         "optimize-autoloader": true,
         "sort-packages": true
     },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
     "autoload": {
         "psr-4": {
             "Gem\\App\\": "./src"
-        }
+        },
+        "files": [
+            "./bootstrap.php"    
+        ]
     }
 }

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Gem\Script;
 
-use ini_set;
+use function ini_set;
 use function session_get_cookie_params;
 use function session_set_cookie_params;
 use function session_start;

@@ -89,6 +89,9 @@ $containerBuilder->register('rand', 'CrystalChess\Rand');
 // Add a session handler.
 $containerBuilder->register('session', 'Gem\Script\Session');
 
+// Add a mail handler.
+$containerBuilder->register('session', 'Gem\Script\Mail');
+
 // Finalize container.
 $container = $containerBuilder;
 

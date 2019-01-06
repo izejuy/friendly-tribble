@@ -1,4 +1,8 @@
 {
+    "name": "izejuy/gem-chess",
+    "description": "The best chess website ever built.",
+    "keywords": [],
+    "type": "project",
     "require": {
         "cakephp/cache": "^3.7",
         "cakephp/database": "^3.7",

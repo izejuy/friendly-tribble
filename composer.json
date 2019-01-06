@@ -3,6 +3,7 @@
     "description": "The best chess website ever built.",
     "keywords": [],
     "type": "project",
+    "license": "proprietary"
     "require": {
         "php": ">=7.2",
         "cakephp/cache": "^3.7",

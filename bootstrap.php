@@ -86,6 +86,9 @@ $containerBuilder->register('hasher', 'CrystalChess\Hasher');
 // Add a rand generator.
 $containerBuilder->register('rand', 'CrystalChess\Rand');
 
+// Add a session handler.
+$containerBuilder->register('session', 'Gem\Script\Session');
+
 // Finalize container.
 $container = $containerBuilder;
 

@@ -54,16 +54,15 @@ $containerBuilder = new ContainerBuilder();
 // Database initialization.
 $driverOptions = [
     'persistent' => $_ENV['DB_PERSISTENT'],
-	'database' => $_ENV['DB_NAME'],
-	'username' => $_ENV['DB_USER'],
-	'password' => $_ENV['DB_PASS'],
+    'database' => $_ENV['DB_NAME'],
+    'username' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASS'],
     'host' => $_ENV['DB_HOST'],
 ];
 
 // Apply driver options.
 $containerBuilder->setParameter('driver.options', $driverOptions);
-$containerBuilder->register('driver', 'Cake\Database\Driver\Mysql')
-    ->addArgument('%driver.options%');
+$containerBuilder->register('driver', 'Cake\Database\Driver\Mysql')->addArgument('%driver.options%');
 
 // Create a stable connection.
 $containerBuilder->register('connection', 'Cake\Database\Connection')->addArgument(['driver' => new Reference('driver')]);

@@ -21,6 +21,3 @@ if ($_ENV['DEBUG']) {
 
 // Require the bootstrap file for additional code.
 require_once __DIR__ . '/../bootstrap.php';
-
-
-

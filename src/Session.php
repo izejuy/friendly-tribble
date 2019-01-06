@@ -14,6 +14,8 @@ use function session_start;
 use function setcookie;
 use function session_regenerate_id;
 use function session_destroy;
+use function session_name;
+use function time;
 use const true;
 use const null;
 

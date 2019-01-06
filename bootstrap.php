@@ -53,9 +53,11 @@ $containerBuilder = new ContainerBuilder();
 
 // Database initialization.
 $driverOptions = [
+    'persistent' => $_ENV['DB_PERSISTENT'],
 	'database' => $_ENV['DB_NAME'],
 	'username' => $_ENV['DB_USER'],
 	'password' => $_ENV['DB_PASS'],
+    'host' => $_ENV['DB_HOST'],
 ];
 
 // Apply driver options.
@@ -64,7 +66,7 @@ $containerBuilder->register('driver', 'Cake\Database\Driver\Mysql')
     ->addArgument('%driver.options%');
 
 // Create a stable connection.
-$containerBuilder->register('connection', 'Cake\Database\Connection')->addArgument(new Reference('driver'));
+$containerBuilder->register('connection', 'Cake\Database\Connection')->addArgument(['driver' => new Reference('driver')]);
 
 // Finalize container.
 $container = $containerBuilder;
@@ -79,5 +81,5 @@ $container = $containerBuilder;
 function app(string $service)
 {
     global $container;
-    return $container[$service];
+    return $container->get($service);
 }

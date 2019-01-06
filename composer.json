@@ -39,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Gem\\App\\": "./src"
+            "Gem\\App\\": "./app",
+            "Gem\\Script\\": "./src"
         },
         "files": [
             "./bootstrap.php"    

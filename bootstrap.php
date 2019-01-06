@@ -68,6 +68,15 @@ $containerBuilder->register('driver', 'Cake\Database\Driver\Mysql')
 // Create a stable connection.
 $containerBuilder->register('connection', 'Cake\Database\Connection')->addArgument(['driver' => new Reference('driver')]);
 
+// Add the validator.
+$containerBuilder->register('validator', 'Cake\Validation\Validator');
+
+// Add a password hasher handler.
+$containerBuilder->register('hasher', 'CrystalChess\Hasher');
+
+// Add a rand generator.
+$containerBuilder->register('rand', 'CrystalChess\Rand');
+
 // Finalize container.
 $container = $containerBuilder;
 

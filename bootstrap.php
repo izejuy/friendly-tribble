@@ -33,8 +33,6 @@ function render(string $template, array $bindData = []): void
  */
 function redirect(string $location = '/'): void
 {
-    // The location will never be multi-leveled.
-    $location = basename($location);
     if (!headers_sent()) {
         header("Location: $location");
     } else {

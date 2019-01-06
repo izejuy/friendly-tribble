@@ -5,6 +5,8 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
@@ -44,4 +46,23 @@ function redirect(string $location = '/'): void
         echo "</noscript>";
     }
     exit;
+}
+
+// Construct the container.
+$containerBuilder = new ContainerBuilder();
+
+// Finalize container.
+$container = $containerBuilder;
+
+/**
+ * Make the container accessible via app function.
+ *
+ * @param string $service The service to access.
+ *
+ * @return mixed The service container.
+ */
+function app(string $service)
+{
+    global $container;
+    return $container[$service];
 }

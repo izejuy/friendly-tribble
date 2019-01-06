@@ -64,10 +64,10 @@ $containerBuilder = new ContainerBuilder();
 // Database initialization.
 $driverOptions = [
     'persistent' => $_ENV['DB_PERSISTENT'],
-    'database' => $_ENV['DB_NAME'],
-    'username' => $_ENV['DB_USER'],
-    'password' => $_ENV['DB_PASS'],
-    'host' => $_ENV['DB_HOST'],
+    'database'   => $_ENV['DB_NAME'],
+    'username'   => $_ENV['DB_USER'],
+    'password'   => $_ENV['DB_PASS'],
+    'host'       => $_ENV['DB_HOST'],
 ];
 
 // Apply driver options.
@@ -91,6 +91,15 @@ $containerBuilder->register('session', 'Gem\Script\Session');
 
 // Add a mail handler.
 $containerBuilder->register('mail', 'Gem\Script\Mail');
+
+// Add a login handler.
+$containerBuilder->register('login', 'Gem\Script\Auth\Login')->addArgument([
+    'hasher'     => new Reference('hasher'),
+    'validator'  => new Reference('validator'),
+    'session'    => new Reference('session'),
+    'connection' => new reference('connection');
+    'rand'       => new Reference('rand');
+]);
 
 // Finalize container.
 $container = $containerBuilder;

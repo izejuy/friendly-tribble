@@ -14,7 +14,7 @@ use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 
 // Load env config.
-(new Dotenv())->load(__DIR__ . '/../gem.env');
+(new Dotenv())->load(__DIR__ . '/gem.env');
 
 // Enable debug if requested by env config.
 if ($_ENV['DEBUG']) {

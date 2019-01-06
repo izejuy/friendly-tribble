@@ -5,8 +5,6 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
-use Cake\Database\Connection;
-use Cake\Database\Driver\Mysql;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Templating\PhpEngine;
@@ -52,6 +50,21 @@ function redirect(string $location = '/'): void
 
 // Construct the container.
 $containerBuilder = new ContainerBuilder();
+
+// Database initialization.
+$driverOptions = [
+	'database' => $_ENV['DB_NAME'],
+	'username' => $_ENV['DB_USER'],
+	'password' => $_ENV['DB_PASS'],
+];
+
+// Apply driver options.
+$containerBuilder->setParameter('driver.options', $driverOptions);
+$containerBuilder->register('driver', 'Cake\Database\Driver\Mysql')
+    ->addArgument('%driver.options%');
+
+// Create a stable connection.
+$containerBuilder->register('connection', 'Cake\Database\Connection')->addArgument(new Reference('driver'));
 
 // Finalize container.
 $container = $containerBuilder;

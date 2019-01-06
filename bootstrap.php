@@ -5,11 +5,21 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
+
+// Load env config.
+(new Dotenv())->load(__DIR__ . '/../gem.env');
+
+// Enable debug if requested by env config.
+if ($_ENV['DEBUG']) {
+    Debug::enable();
+}
 
 /**
  * Render a template to client-side.

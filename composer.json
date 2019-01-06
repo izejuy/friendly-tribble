@@ -1,4 +1,4 @@
-{
+
     "name": "izejuy/gem-chess",
     "description": "The best chess website ever built.",
     "keywords": [],
@@ -9,8 +9,10 @@
         "cakephp/form": "^3.7",
         "cakephp/log": "^3.7",
         "cakephp/validation": "^3.7",
+        "crystal-chess/hasher": "^0.1.1",
+        "crystal-chess/rand": "^0.0.2",
         "league/omnipay": "^3.0",
-        "nesbot/carbon": "^2.10",
+        "nesbot/carbon": "^1.26",
         "omnipay/stripe": "^3.0",
         "paragonie/halite": "^4.5",
         "paragonie/hidden-string": "^1.0",
@@ -30,5 +32,10 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Gem\\App\\": "./src"
+        }
     }
 }

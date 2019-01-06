@@ -23,3 +23,27 @@ function render(string $template, array $bindData = []): void
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
     echo $templating->render($template, $bindData);
 }
+
+/**
+ * Redirect the user to a different internal page or external.
+ *
+ * @param string $location The location in which they will go.
+ *
+ * @return void Returns nothing.
+ */
+function redirect(string $location = '/'): void
+{
+    // The location will never be multi-leveled.
+    $location = basename($location);
+    if (!headers_sent()) {
+        header("Location: $location");
+    } else {
+        echo "<script type=\"text/javascript\">";
+        echo "window.location.href=\"$loction\";";
+        echo "</script>";
+        echo "<noscript>";
+        echo "<meta http-equiv=\"refresh\" content=\"0;url=$location\">";
+        echo "</noscript>";
+    }
+    exit;
+}

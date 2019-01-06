@@ -11,9 +11,6 @@ use Symfony\Component\Dotenv\Dotenv;
 // Require the package dependencies.
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Require the bootstrap file for additional code.
-require_once __DIR__ . '/../bootstrap.php';
-
 // Load env config.
 (new Dotenv())->load(__DIR__ . '/../gem.env');
 
@@ -21,3 +18,9 @@ require_once __DIR__ . '/../bootstrap.php';
 if ($_ENV['DEBUG']) {
     Debug::enable();
 }
+
+// Require the bootstrap file for additional code.
+require_once __DIR__ . '/../bootstrap.php';
+
+
+

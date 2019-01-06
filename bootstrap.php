@@ -5,6 +5,8 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
+use Cake\Database\Connection;
+use Cake\Database\Driver\Mysql;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Templating\PhpEngine;

@@ -29,7 +29,7 @@ $request = Request::createFromGlobals();
 // Load the route yaml config file.
 $fileLocator = new FileLocator(array(__DIR__));
 $loader = new YamlFileLoader($fileLocator);
-$routes = $loader->load('routes.yml');
+$routes = $loader->load('/../routes.yml');
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

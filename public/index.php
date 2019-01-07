@@ -26,10 +26,8 @@ require __DIR__ . '/../vendor/autoload.php';
 // Create the Request object
 $request = Request::createFromGlobals();
 
-// Load the route yaml config file.
-$fileLocator = new FileLocator(array(__DIR__));
-$loader = new YamlFileLoader($fileLocator);
-$routes = $loader->load('/../routes.yml');
+$routes = new RouteCollection();
+$routes->add('index', new Route('/', array('_controller' => (new Gem\Controller\IndexController())->view())));
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

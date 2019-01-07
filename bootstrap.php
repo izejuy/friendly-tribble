@@ -9,9 +9,10 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\Templating\Helper\SlotsHelper;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
-use Symfony\Component\Templating\Loader\FilesystemLoader;
 
 // Load env config.
 (new Dotenv())->load(__DIR__ . '/gem.env');
@@ -33,6 +34,7 @@ function render(string $template, array $bindData = [])
 {
     $filesystemLoader = new FilesystemLoader(__DIR__ . '/lib/views/%name%');
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
+    $templateEngine->set(new SlotsHelper());
     return $templating->render($template, $bindData);
 }
 

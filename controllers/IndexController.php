@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Gem\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-use function render;
+use function redirect;
 
 /**
  * The initial controller for when someone visits

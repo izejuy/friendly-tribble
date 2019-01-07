@@ -15,6 +15,8 @@ use function date;
 use function count;
 use function intval;
 use function redirect;
+use function respond;
+use function trans;
 use const PHP_INT_MAX;
 use const null;
 use const false;
@@ -51,6 +53,11 @@ class Login implements LoginInterface
     private $rand;
 
     /**
+     * @var mixed $mail The mail handler.
+     */
+    private $mail;
+
+    /**
      * Inject classes.
      *
      * @param array $data Contains other classes injected.
@@ -64,6 +71,7 @@ class Login implements LoginInterface
         $this->session    = $data['session'];
         $this->hasher     = $data['hasher'];
         $this->rand       = $data['rand'];
+        $this->mail       = $data['mail'];
     }
 
     /**
@@ -127,7 +135,56 @@ class Login implements LoginInterface
      */
     public function userLogin(string $username, string $password): void
     {
-        $hash = $this->hasher->create($password);
+        if ($this->isBruteForce()) {
+            return respond([
+                'status'  => 'error',
+                'message' => trans('brute.force')
+            ]);
+        }
+        $statement = $connection->prepare('SELECT * FROM users WHERE username = :user');
+        $statement->bind(['user' => $username], ['user' => 'string']);
+        $results = $statement->fetchAll('assoc');
+        if (count($results) !== 1) {
+            $this->increaseLoginAttempts();
+            return respond([
+                'status'  => 'error',
+                'message' => trans('user.not.found')
+            ]);
+        }
+        if ($results[0]['confirmed'] == 'N') {
+            $this->increaseLoginAttempts();
+            return respond([
+                'status'  => 'error',
+                'message' => trans('user.not.confirmed')
+            ]);
+        }
+        if ($results[0]['banned'] == 'Y') {
+            $this->increaseLoginAttempts();
+            return respond([
+                'status'  => 'error',
+                'message' => trans('user.banned')
+            ]);
+        }
+        if (!$this->hasher->verify($password, $results[0]['password']) {
+            $this->increaseLoginAttempts();
+            return respond([
+                'status'  => 'error',
+                'message' => trans('password.incorrect')
+            ]);
+        }
+        if ($results[0]['two_factor_auth'] == 'Y') {
+            $twoFactorCode = $this->rand->getTwoFactorCode();
+            $this->session->set('two_factor_code', $twoFactorCode);
+            $this->mail->send($results[0]['mail'], 'two.factor.mail.tpl', ['twoFactorCode' => $twoFactorCode]);
+            redirect('/2fa');
+        }
+        $this->updateLoginDate($result[0]['user_id']);
+        $this->session->set('user_id', $result[0]['user_id']);
+        $this->session->regenerate();
+        if ($_SERVER['LOGIN_FINGERPRINT'] == true) {
+            $this->session->set('login_fingerprint', $this->generateLoginString());
+        }
+        redirect('/dashboard');
     }
 
     /**
@@ -137,9 +194,9 @@ class Login implements LoginInterface
      */
     public function increaseLoginAttempts()
     {
-        $date = date("Y-m-d");
+        $date   = date("Y-m-d");
         $userIp = $_SERVER['REMOTE_ADDR'];
-        $table = 'login_attempts';
+        $table  = 'login_attempts';
         $loginAttempts = $this->getLoginAttempts();
         if ($loginAttempts > 0) {
             $loginAttempts = $loginAttempts + 1;
@@ -191,7 +248,7 @@ class Login implements LoginInterface
      */
     private function getLoginAttempts()
     {
-        $date = date("Y-m-d");
+        $date   = date("Y-m-d");
         $userIp = $_SERVER['REMOTE_ADDR'];
         if (!$userIp) {
             return PHP_INT_MAX;
@@ -199,10 +256,10 @@ class Login implements LoginInterface
         $statement = $this->connection->prepare('SELECT * FROM login_attempts WHERE ip_addr = :ip AND date = :date');
         $statement->bind(['ip' => $userIp, 'date' => $date], ['ip' => 'string', 'date' => 'date']);
         $results = $statement->fetchAll('assoc');
-        if (count($result) == 0) {
+        if (count($results) == 0) {
             return 0;
         }
-        return intval($result[0]['attempt_number']);
+        return intval($results[0]['attempt_number']);
     }
     
     /**

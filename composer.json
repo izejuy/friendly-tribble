@@ -63,5 +63,6 @@
         "files": [
             "./bootstrap.php"    
         ]
-    }
+    },
+    "prefer-stable": true
 }

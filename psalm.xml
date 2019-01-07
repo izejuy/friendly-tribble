@@ -6,10 +6,11 @@
         <directory name="./src" />
     </projectFiles>
     <issueHandlers>
-        <TooFewArguments errorLevel="suppress" /> <!-- \sodium_memzero() -->
         <PropertyNotSetInConstructor errorLevel="suppress" />
         <RedundantCondition errorLevel="suppress" />
+        <MixedArrayOffset errorLevel="suppress" />
         <MixedAssignment errorLevel="suppress" />
+        <TooFewArguments errorLevel="suppress" />
         <MixedArgument errorLevel="suppress" />
     </issueHandlers>
 </psalm>

@@ -1,9 +1,23 @@
 {
     "name": "izejuy/gem-chess",
     "description": "The best chess website ever built.",
-    "keywords": [],
+    "keywords": [
+        "gem",
+        "gem-skeleton",
+        "php72",
+        "php73",
+        "fast",
+        "secure"
+    ],
     "type": "project",
     "license": "proprietary",
+    "authors": [
+        {
+            "name": "Gem Chess Contributors",
+            "homepage": "https://github.com/izejuy/gem-chess/graphs/contributors"
+            "role": "Contribute"
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "cakephp/cache": "^3.7",

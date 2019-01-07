@@ -99,7 +99,7 @@ class Session implements SessionInterface
      *
      * @return void Returns nothing.
      */
-    public static function destroy($key)
+    public static function delete($key)
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);

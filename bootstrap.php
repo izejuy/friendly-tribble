@@ -17,7 +17,7 @@ use Symfony\Component\Templating\Loader\FilesystemLoader;
 (new Dotenv())->load(__DIR__ . '/gem.env');
 
 // Enable debug if requested by env config.
-if ($_ENV['DEBUG']) {
+if ($_SERVER['DEBUG']) {
     Debug::enable();
 }
 
@@ -63,11 +63,11 @@ $containerBuilder = new ContainerBuilder();
 
 // Database initialization.
 $driverOptions = [
-    'persistent' => $_ENV['DB_PERSISTENT'],
-    'database'   => $_ENV['DB_NAME'],
-    'username'   => $_ENV['DB_USER'],
-    'password'   => $_ENV['DB_PASS'],
-    'host'       => $_ENV['DB_HOST'],
+    'persistent' => $_SERVER['DB_PERSISTENT'],
+    'database'   => $_SERVER['DB_NAME'],
+    'username'   => $_SERVER['DB_USER'],
+    'password'   => $_SERVER['DB_PASS'],
+    'host'       => $_SERVER['DB_HOST'],
 ];
 
 // Apply driver options.

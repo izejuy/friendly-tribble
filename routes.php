@@ -11,4 +11,4 @@ use Symfony\Component\Routing\Loader\YamlFileLoader;
 // Load the route yaml config file.
 $fileLocator = new FileLocator(array(__DIR__));
 $loader = new YamlFileLoader($fileLocator);
-$routes = $loader->load('routes.yaml');
+$routes = $loader->load('routes.yml');

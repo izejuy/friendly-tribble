@@ -21,19 +21,30 @@ use Symfony\Component\Routing\RouteCollection;
 // Require the package dependencies.
 require __DIR__ . '/../vendor/autoload.php';
 
+// Create the Request object
 $request = Request::createFromGlobals();
 
+// Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());
 
 $dispatcher = new EventDispatcher();
+// ... Add some event listeners
+
 $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 
+// Create your controller and argument resolvers.
 $controllerResolver = new ControllerResolver();
 $argumentResolver = new ArgumentResolver();
 
+// Instantiate the kernel.
 $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 
+// Actually execute the kernel, which turns the request into a response
+// by dispatching events, calling a controller, and returning the response
 $response = $kernel->handle($request);
+
+// Send the headers and echo the content
 $response->send();
 
+// Trigger the kernel.terminate event
 $kernel->terminate($request, $response);

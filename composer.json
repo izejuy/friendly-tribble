@@ -56,7 +56,6 @@
     },
     "autoload": {
         "psr-4": {
-            "Gem\\App\\": "./app",
             "Gem\\Script\\": "./src",
             "Gem\\Controller\\": "./controllers"
         },

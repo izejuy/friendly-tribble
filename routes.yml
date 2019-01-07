@@ -1,3 +1,0 @@
-indexRoute:
-    path: /
-    defaults: { _controller: 'IndexController::view' }

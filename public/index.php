@@ -27,7 +27,13 @@ require __DIR__ . '/../vendor/autoload.php';
 $request = Request::createFromGlobals();
 
 $routes = new RouteCollection();
-$routes->add('index', new Route('/', array('_controller' => 'Gem\Controller\IndexController::view')));
+$routes->add('index', new Route('/', array(
+    '_controller'     => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
+    'route'           => 'login',
+    'permanent'       => true,
+    'keepQueryParams' => true
+)));
+$routes->add('index', new Route('/login', array('_controller' => 'Gem\Controller\Auth\LoginController::view')));
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

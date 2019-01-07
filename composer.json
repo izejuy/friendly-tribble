@@ -68,7 +68,7 @@
         },
         "files": [
             "./bootstrap.php",
-            "./routes.php"
+            "./version.php"
         ]
     },
     "prefer-stable": true

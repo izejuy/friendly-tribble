@@ -23,6 +23,6 @@ class IndexController
      */
     public function view()
     {
-        return new Response(render('index.html.php'));
+        redirect('/login');
     }
 }

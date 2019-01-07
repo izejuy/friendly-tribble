@@ -29,7 +29,7 @@ if ($_SERVER['DEBUG']) {
  *
  * @return mixed Returns the pages response.
  */
-function render(string $template, array $bindData = []): void
+function render(string $template, array $bindData = [])
 {
     $filesystemLoader = new FilesystemLoader(__DIR__ . '/lib/views/%name%');
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);

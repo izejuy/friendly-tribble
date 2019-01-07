@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -23,6 +25,11 @@ require __DIR__ . '/../vendor/autoload.php';
 
 // Create the Request object
 $request = Request::createFromGlobals();
+
+// Load the route yaml config file.
+$fileLocator = new FileLocator(array(__DIR__));
+$loader = new YamlFileLoader($fileLocator);
+$routes = $loader->load('routes.yml');
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

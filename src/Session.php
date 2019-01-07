@@ -31,17 +31,17 @@ class Session implements SessionInterface
      */
     public static function start()
     {
-        session_name($_ENV['SESSION_NAME']);
-        ini_set('session.use_cookies', $_ENV['SESSION_USE_COOKIES']);
-        ini_set('session.use_only_cookies', $_ENV['SESSION_USE_ONLY_COOKIES']);
-        ini_set('session.use_strict_mode', $_ENV['SESSION_USE_STRICT_MODE']);
+        session_name($_SERVER['SESSION_NAME']);
+        ini_set('session.use_cookies', $_SERVER['SESSION_USE_COOKIES']);
+        ini_set('session.use_only_cookies', $_SERVER['SESSION_USE_ONLY_COOKIES']);
+        ini_set('session.use_strict_mode', $_SERVER['SESSION_USE_STRICT_MODE']);
         $cookieParams = session_get_cookie_params();
         session_set_cookie_params(
             $cookieParams["lifetime"],
             $cookieParams["path"],
             $cookieParams["domain"],
-            $_ENV['SESSION_SECURE'],
-            $_ENV['SESSION_HTTPONLY']
+            $_SERVER['SESSION_SECURE'],
+            $_SERVER['SESSION_HTTPONLY']
         );
         session_start();
     }

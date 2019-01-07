@@ -6,5 +6,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <title><?php $view['slots']->output('title', 'Gem Chess - A better playing chess website powered by Symfony.') ?></title>
     <meta name="author" content="Gem Chess Contributors <https://github.com/izejuy/gem-chess/graphs/contributors>">
+    <meta name="Mix" content="symfony-mix:cakephp-mix:crystal-mix">
     <meta name="X-Powered-By" content="Symfony Framework">
 </head>

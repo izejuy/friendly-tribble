@@ -99,7 +99,6 @@ $containerBuilder->register('login', 'Gem\Script\Auth\Login')->addArgument([
     'session'    => new Reference('session'),
     'connection' => new reference('connection'),
     'rand'       => new Reference('rand'),
-    'mail'       => new Reference('mail'),
 ]);
 
 // Finalize container.

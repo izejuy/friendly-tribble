@@ -48,7 +48,8 @@
         "symfony/polyfill-php73": "^1.10",
         "symfony/process": "^4.2",
         "symfony/routing": "^4.2",
-        "symfony/templating": "^4.2"
+        "symfony/templating": "^4.2",
+        "symfony/yaml": "^4.2"
     },
     "config": {
         "optimize-autoloader": true,

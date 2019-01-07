@@ -7,7 +7,15 @@ declare(strict_types=1);
 
 namespace Gem\Script\Auth;
 
+use function is_null;
+use function hash_equals;
 use function hash;
+use function sprintf;
+use function date;
+use function count;
+use function intval;
+use function redirect;
+use const PHP_INT_MAX;
 use const null;
 use const false;
 use const true;
@@ -18,14 +26,9 @@ use const true;
 class Login implements LoginInterface
 {
     /**
-     * @var mixed $rand The rand generator.
+     * @var mixed $connection The database connection.
      */
-    private $rand;
-
-    /**
-     * @var mixed $session The session handler.
-     */
-    private $session;
+    private $connection = null;
 
     /**
      * @var mixed $validator The validator.
@@ -33,14 +36,19 @@ class Login implements LoginInterface
     private $validator;
 
     /**
-     * @var mixed $connection The database connection.
+     * @var mixed $session The session handler.
      */
-    private $connection = null;
+    private $session;
 
     /**
      * @var mixed $hasher The password hasher.
      */
     private $hasher;
+
+    /**
+     * @var mixed $rand The rand generator.
+     */
+    private $rand;
 
     /**
      * Inject classes.
@@ -66,12 +74,12 @@ class Login implements LoginInterface
      */
     public static function isLoggedIn(): bool
     {
-        if ($this->session->get('user_id') == null) {
+        if (is_null($this->session->get('user_id'))) {
             return false;
         } elseif ($_SERVER['LOGIN_FINGERPRINT']) {
             $loginString = $this->generateLoginString();
             $currentString = $this->session->get('login_fingerprint');
-            if ($currentString != null && $currentString !== $loginString) {
+            if (!is_null($currentString) && hash_equals($currentString, $loginString)) {
                 $this->logout();
                 return false;
             }
@@ -104,14 +112,115 @@ class Login implements LoginInterface
      *
      * @return void Returns nothing.
      */
-    public function byId($id): void
+    public function loginById($id): void
     {
-        if ($id != 0 && $id != '' && $id != null) {
+        if ($id < 1 && $id != '' && !is_null($id)) {
             $this->updateLoginDate($id);
-            $session->set('user_id', $id);
+            $this->session->set('user_id', $id);
             if ($_SERVER['LOGIN_FINGERPRINT'] == true) {
-                $session->set("login_fingerprint", $this->generateLoginString());
+                $this->session->set('login_fingerprint', $this->generateLoginString());
             }
         }
+    }
+
+    /**
+     */
+    public function userLogin(string $username, string $password): void
+    {
+        $hash = $this->hasher->create($password);
+    }
+
+    /**
+     * Increase login attempts from specific IP address to preven brute force attack.
+     *
+     * @return void Returns nothing.
+     */
+    public function increaseLoginAttempts()
+    {
+        $date = date("Y-m-d");
+        $userIp = $_SERVER['REMOTE_ADDR'];
+        $table = 'login_attempts';
+        $loginAttempts = $this->getLoginAttempts();
+        if ($loginAttempts > 0) {
+            $loginAttempts = $loginAttempts + 1;
+            $this->connection->update($table, [
+                'attempt_number' => $loginAttempts
+            ], [
+                'ip_addr' => $userIp,
+                'date'    => $date
+            ], [
+                'attempt_number' => 'integer',
+                'ip_addr'        => 'string',
+                'date'           => 'date'
+            ]);
+        } else {
+            $connection->insert($table, [
+                'ip_addr' => $userIp,
+                'date'    => $date
+            ], [
+                'ip_addr' => 'string',
+                'date'    => 'date'
+            ]);
+        }
+    }
+    
+    /**
+     * Log out user and destroy session.
+     *
+     * @return void Returns nothing.
+     */
+    public function logout()
+    {
+        redirect('/logout');
+    }
+
+    /**
+     * Check if someone is trying to break password with brute force attack.
+     *
+     * @return bool Returns true if number of attempts are greater than allowed, false otherwise.
+     */
+    public function isBruteForce()
+    {
+        return $this->getLoginAttempts() > $_SERVER['LOGIN_MAX_LOGIN_ATTEMPTS'];
+    }
+
+    /**
+     * Get the current number of login attempts.
+     *
+     * @return int The login attempt number.
+     */
+    private function getLoginAttempts()
+    {
+        $date = date("Y-m-d");
+        $userIp = $_SERVER['REMOTE_ADDR'];
+        if (!$userIp) {
+            return PHP_INT_MAX;
+        }
+        $statement = $this->connection->prepare('SELECT * FROM login_attempts WHERE ip_addr = :ip AND date = :date');
+        $statement->bind(['ip' => $userIp, 'date' => $date], ['ip' => 'string', 'date' => 'date']);
+        $results = $statement->fetchAll('assoc');
+        if (count($result) == 0) {
+            return 0;
+        }
+        return intval($result[0]['attempt_number']);
+    }
+    
+    /**
+     * Update database with login date and time when this user is logged in.
+     *
+     * @param int $userId Id of user that is logged in.
+     *
+     * @return void Returns nothing.
+     */
+    private function updateLoginDate($userId)
+    {
+        $this->connection->update('users', [
+            'last_login' => date("Y-m-d H:i:s")
+        ], [
+            'user_id' => intval($userId)
+        ], [
+            'last_login' => 'date',
+            'user_id'    => 'integer'
+        ]);
     }
 }

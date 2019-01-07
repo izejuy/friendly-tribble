@@ -34,6 +34,7 @@
         "omnipay/stripe": "^3.0",
         "paragonie/halite": "^4.5",
         "paragonie/hidden-string": "^1.0",
+        "symfony/config": "^4.2",
         "symfony/console": "^4.2",
         "symfony/debug": "^4.2",
         "symfony/dependency-injection": "^4.2",

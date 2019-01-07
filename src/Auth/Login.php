@@ -33,11 +33,6 @@ class Login implements LoginInterface
     private $connection = null;
 
     /**
-     * @var mixed $validator The validator.
-     */
-    private $validator;
-
-    /**
      * @var mixed $session The session handler.
      */
     private $session;
@@ -67,7 +62,6 @@ class Login implements LoginInterface
     public function __construct(array $data = [])
     {
         $this->connection = $data['connection'];
-        $this->validator  = $data['validator'];
         $this->session    = $data['session'];
         $this->hasher     = $data['hasher'];
         $this->rand       = $data['rand'];

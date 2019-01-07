@@ -34,7 +34,7 @@ function render(string $template, array $bindData = [])
 {
     $filesystemLoader = new FilesystemLoader(__DIR__ . '/lib/views/%name%');
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
-    $templateEngine->set(new SlotsHelper());
+    $templating->set(new SlotsHelper());
     return $templating->render($template, $bindData);
 }
 

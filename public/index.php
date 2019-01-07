@@ -27,7 +27,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $request = Request::createFromGlobals();
 
 $routes = new RouteCollection();
-$routes->add('index', new Route('/', array('_controller' => (new Gem\Controller\IndexController())->view())));
+$routes->add('index', new Route('/', array('_controller' => 'Gem\Controller\IndexController')));
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

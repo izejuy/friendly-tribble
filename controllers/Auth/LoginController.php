@@ -23,5 +23,6 @@ class LoginController
      */
     public function view()
     {
+        return new Response(render('login.html.php'));
     }
 }

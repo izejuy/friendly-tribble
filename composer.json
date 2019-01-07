@@ -36,6 +36,7 @@
         "symfony/debug": "^4.2",
         "symfony/dependency-injection": "^4.2",
         "symfony/dotenv": "^4.2",
+        "symfony/http-kernel": "^4.2",
         "symfony/lock": "^4.2",
         "symfony/options-resolver": "^4.2",
         "symfony/polyfill-apcu": "^1.10",

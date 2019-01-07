@@ -29,7 +29,7 @@ class Session implements SessionInterface
      *
      * @return void Returns nothing.
      */
-    public static function start()
+    public static function start(): void
     {
         session_name($_SERVER['SESSION_NAME']);
         ini_set('session.use_cookies', $_SERVER['SESSION_USE_COOKIES']);
@@ -51,7 +51,7 @@ class Session implements SessionInterface
      *
      * @return void Returns nothing.
      */
-    public static function destroy()
+    public static function destroy(): void
     {
         $_SESSION = array();
         $params = session_get_cookie_params();
@@ -74,7 +74,7 @@ class Session implements SessionInterface
      *
      * @return bool Returns true on success and false on failure.
      */
-    public static function regenerate($deleteOldSession = true)
+    public static function regenerate(bool $deleteOldSession = true): bool
     {
         return session_regenerate_id($deleteOldSession);
     }
@@ -82,12 +82,12 @@ class Session implements SessionInterface
     /**
      * Set session data.
      *
-     * @param mixed $key   Key that will be used to store value.
-     * @param mixed $value Value that will be stored.
+     * @param string $key   Key that will be used to store value.
+     * @param mixed  $value Value that will be stored.
      *
      * @return void Returns nothing.
      */
-    public static function set($key, $value)
+    public static function set(string $key, $value): void
     {
         $_SESSION[$key] = $value;
     }
@@ -95,11 +95,11 @@ class Session implements SessionInterface
     /**
      * Unset session data with provided key.
      *
-     * @param $key The session key.
+     * @param string $key The session key.
      *
      * @return void Returns nothing.
      */
-    public static function delete($key)
+    public static function delete(string $key): void
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
@@ -109,13 +109,13 @@ class Session implements SessionInterface
     /**
      * Get data from $_SESSION variable.
      *
-     * @param mixed $key     Key used to get data from session.
-     * @param mixed $default This will be returned if there is no record inside
+     * @param string $key     Key used to get data from session.
+     * @param mixed  $default This will be returned if there is no record inside
      *                       session for given key.
      *
      * @return mixed Session value for given key.
      */
-    public static function get($key, $default = null)
+    public static function get(string $key, $default = null)
     {
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];

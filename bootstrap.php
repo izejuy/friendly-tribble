@@ -27,13 +27,13 @@ if ($_SERVER['DEBUG']) {
  * @param string $template The template name.
  * @param array  $bindData The bind data for template.
  *
- * @return void Returns nothing.
+ * @return mixed Returns the pages response.
  */
 function render(string $template, array $bindData = []): void
 {
     $filesystemLoader = new FilesystemLoader(__DIR__ . '/lib/views/%name%');
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
-    echo $templating->render($template, $bindData);
+    return $templating->render($template, $bindData);
 }
 
 /**

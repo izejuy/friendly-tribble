@@ -6,4 +6,4 @@ declare(strict_types=1);
  */
 
 define('GEM_VERSION_ID', 100000);
-define('GEM_VERSION', 'v1.0.0')
+define('GEM_VERSION', 'v1.0.0');

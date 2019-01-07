@@ -66,7 +66,8 @@
             "Gem\\Controller\\": "./controllers"
         },
         "files": [
-            "./bootstrap.php"    
+            "./bootstrap.php",
+            "./routes.php"
         ]
     },
     "prefer-stable": true

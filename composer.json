@@ -5,7 +5,7 @@
         "gem",
         "gem-skeleton",
         "symfony-mix",
-        "cakephp-mix"
+        "cakephp-mix",
         "php72",
         "php73",
         "fast",

@@ -12,6 +12,9 @@ install:
     - travis_retry composer install --no-interaction
 script:
     - ./vendor/bin/psalm
+before_script:
+    - mkdir -p build/logs
+    - ls -al
 cache:
     directories:
         - vendor

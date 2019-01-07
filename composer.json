@@ -1,11 +1,12 @@
 {
     "name": "izejuy/gem-chess",
-    "description": "The best chess website ever built.",
+    "description": "A better playing chess websit powered by Symfony.",
     "keywords": [
         "gem",
         "gem-skeleton",
         "php72",
         "php73",
+        "symfony-mix",
         "fast",
         "secure"
     ],

@@ -13,6 +13,8 @@ use Symfony\Component\Templating\Helper\SlotsHelper;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 // Load env config.
 (new Dotenv())->load(__DIR__ . '/gem.env');
@@ -58,6 +60,30 @@ function redirect(string $location = '/'): void
         echo "</noscript>";
     }
     exit;
+}
+
+// Determine page language.
+if (isset($_COOKIE['lang']) {
+    $translator = new Translator($_COOKIE['lang']);
+    $langFile = include __DIR__ . '/langs/' . $_COOKIE['lang'];
+    $translator->addResource('array', $langFile, $_COOKIE['lang']);
+} else {
+    $translator = new Translator($_SERVER['LANG_DEFAULT_LANG']);
+    $langFile = include __DIR__ . '/langs/' . $_SERVER['LANG_DEFAULT_LANG'];
+    $translator->addResource('array', $langFile, $_SERVER['LANG_DEFAULT_LANG']);
+}
+
+/**
+ * Return the proper translation based on access point.
+ *
+ * @param string $accessPoint The access point for a certain translation.
+ *
+ * @return string The proper translation.
+ */
+function trans(string $accessPoint = '')
+{
+    global $translator;
+    return $translator->trans($accessPoint)
 }
 
 // Construct the container.

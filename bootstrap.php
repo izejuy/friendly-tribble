@@ -62,15 +62,18 @@ function redirect(string $location = '/'): void
     exit;
 }
 
-// Determine page language.
-if (isset($_COOKIE['lang']) {
-    $translator = new Translator($_COOKIE['lang']);
-    $langFile = include __DIR__ . '/langs/' . $_COOKIE['lang'];
-    $translator->addResource('array', $langFile, $_COOKIE['lang']);
-} else {
-    $translator = new Translator($_SERVER['LANG_DEFAULT_LANG']);
-    $langFile = include __DIR__ . '/langs/' . $_SERVER['LANG_DEFAULT_LANG'];
-    $translator->addResource('array', $langFile, $_SERVER['LANG_DEFAULT_LANG']);
+// The list of avaliable langs.
+$langs = [
+    'en_US',
+    'fr_FR'
+];
+
+// Make the get request for the lang change avaliable on all routes.
+if (isset($_GET['lang'])) {
+    if (!in_array($_GET['lang'], $langs)) {
+        goto serverLang;
+    }
+    
 }
 
 /**

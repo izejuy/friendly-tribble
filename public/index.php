@@ -5,7 +5,6 @@ declare(strict_types=1);
  * @link <https://github.com/izejuy/gem-chess> Source.
  */
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -26,14 +24,8 @@ require __DIR__ . '/../vendor/autoload.php';
 // Create the Request object
 $request = Request::createFromGlobals();
 
-$routes = new RouteCollection();
-$routes->add('index', new Route('/', array(
-    '_controller'     => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
-    'route'           => 'login',
-    'permanent'       => true,
-    'keepQueryParams' => true
-)));
-$routes->add('index', new Route('/login', array('_controller' => 'Gem\Controller\Auth\LoginController::view')));
+// Get the routes.
+$routes = getRoutes();
 
 // Add a url matcher.
 $matcher = new UrlMatcher($routes, new RequestContext());

@@ -61,8 +61,6 @@ class Rand implements RandInterface
      * @param int $length The code length.
      *
      * @return int Returns the two factor code.
-     *
-     * @codeCoverageIgnore
      */
     public function getTwoFactorCode(int $length = 6): int
     {

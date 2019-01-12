@@ -1,8 +1,18 @@
 <?php
 declare(strict_types=1);
 /**
- * @author Gem Chess Contributors <https://github.com/izejuy/gem-chess/graphs/contributors>.
- * @link <https://github.com/izejuy/gem-chess> Source.
+ * Gem.
+ *
+ * A simple PHP content management system powered by Symfony and CakePHP.
+ *
+ * @author Gem Contributors <https://github.com/izejuy/gem/graphs/contributors>.
+ *
+ * @license MIT - A short and simple permissive license with conditions only requiring preservation of copyright and license notices.
+ *                Licensed works, modifications, and largerworks may be distributed under different terms and without source code.
+ *
+ * @link <https://github.com/izejuy/gem/blob/master/LICENSE> MIT License.
+ *
+ * @link <https://github.com/izejuy/gem> Source.
  */
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -21,7 +31,10 @@ use Symfony\Component\Routing\RouteCollection;
 // Require the package dependencies.
 require __DIR__ . '/../vendor/autoload.php';
 
-// Create the Request object
+// Require the routes function.
+require __DIR__ . '/../routes.php';
+
+// Create the Request object.
 $request = Request::createFromGlobals();
 
 // Get the routes.
@@ -31,7 +44,7 @@ $routes = getRoutes();
 $matcher = new UrlMatcher($routes, new RequestContext());
 
 $dispatcher = new EventDispatcher();
-// ... Add some event listeners
+// ... Add some event listeners.
 
 $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 
@@ -43,11 +56,11 @@ $argumentResolver = new ArgumentResolver();
 $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 
 // Actually execute the kernel, which turns the request into a response
-// by dispatching events, calling a controller, and returning the response
+// by dispatching events, calling a controller, and returning the response.
 $response = $kernel->handle($request);
 
-// Send the headers and echo the content
+// Send the headers and echo the content.
 $response->send();
 
-// Trigger the kernel.terminate event
+// Trigger the kernel.terminate event.
 $kernel->terminate($request, $response);

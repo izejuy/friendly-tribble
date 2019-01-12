@@ -119,23 +119,19 @@ class Hasher implements HasherInterface
                 'verify' => true,
             ]);
         } elseif ($this->options['algo'] == 'argon2i') {
-            // @codeCoverageIgnoreStart
             return new ArgonHasher([
                 'memory_cost' => $this->options['memory_cost'],
                 'time_cost'   => $this->options['time_cost'],
                 'threads'     => $this->options['threads'],
                 'verify'      => true,
             ]);
-            // @codeCoverageIgnoreEnd
         } elseif ($this->options['algo'] == 'argon2id') {
-            // @codeCoverageIgnoreStart
             return new Argon2IdHasher([
                 'memory_cost' => $this->options['memory_cost'],
                 'time_cost'   => $this->options['time_cost'],
                 'threads'     => $this->options['threads'],
                 'verify'      => true,
             ]);
-            // @codeCoverageIgnoreEnd
         } else {
             throw new UnexpectedValueException('Could not determine the hash algo.');
         }

@@ -19,6 +19,8 @@ namespace Izejuy\App\Controller\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use function redirect;
+
 /**
  * The logout controller.
  */
